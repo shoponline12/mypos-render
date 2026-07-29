@@ -1,3 +1,9 @@
+router.get("/", (req, res) => {
+  res.json({
+    status: "ok",
+    message: "Payment API is working"
+  });
+});
 const express = require("express");
 const { createPayment, getConfig } = require("../services/mypos");
 
