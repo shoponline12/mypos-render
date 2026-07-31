@@ -1,21 +1,18 @@
 const express = require("express");
+
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.render("checkout", {
-        cart: []
-    });
-});
+let currentCart = null;
 
 router.post("/", (req, res) => {
+  currentCart = req.body;
+  res.json({ success: true });
+});
 
-    console.log("SHOPIFY CART:");
-    console.log(req.body);
-
-    res.render("checkout", {
-        cart: req.body.items || []
-    });
-
+router.get("/", (req, res) => {
+  res.render("checkout", {
+    cart: currentCart
+  });
 });
 
 module.exports = router;
