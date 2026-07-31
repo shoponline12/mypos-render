@@ -57,6 +57,19 @@ button:hover{
 opacity:.9;
 }
 
+.cart-item{
+display:flex;
+gap:15px;
+margin-bottom:20px;
+padding-bottom:20px;
+border-bottom:1px solid #eee;
+}
+
+.cart-item img{
+width:80px;
+border-radius:8px;
+}
+
 </style>
 
 </head>
@@ -69,7 +82,9 @@ opacity:.9;
 
 <h2>Η παραγγελία σας</h2>
 
-<p>Τα προϊόντα του Shopify θα εμφανιστούν εδώ.</p>
+<div id="cart-items">
+Φόρτωση...
+</div>
 
 </div>
 
@@ -94,9 +109,7 @@ opacity:.9;
 <input name="zip" placeholder="Τ.Κ.">
 
 <button type="submit">
-
 Πληρωμή με myPOS
-
 </button>
 
 </form>
@@ -104,6 +117,51 @@ opacity:.9;
 </div>
 
 </div>
+
+<script>
+
+fetch("/cart")
+.then(r=>r.json())
+.then(cart=>{
+
+let html="";
+
+cart.items.forEach(item=>{
+
+html+=`
+<div class="cart-item">
+
+<img src="${item.image}">
+
+<div>
+
+<b>${item.product_title}</b><br>
+
+Ποσότητα: ${item.quantity}<br>
+
+${(item.final_price/100).toFixed(2)} €
+
+</div>
+
+</div>
+`;
+
+});
+
+html+=`<h3>Σύνολο ${(cart.total_price/100).toFixed(2)} €</h3>`;
+
+document.getElementById("cart-items").innerHTML=html;
+
+})
+.catch(err=>{
+
+document.getElementById("cart-items").innerHTML="Σφάλμα φόρτωσης καλαθιού";
+
+console.log(err);
+
+});
+
+</script>
 
 </body>
 </html>
