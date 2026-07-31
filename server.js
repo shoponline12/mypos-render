@@ -7,6 +7,7 @@ const path = require("path");
 const paymentRoutes = require("./routes/payment");
 const notifyWebhook = require("./webhooks/notify");
 const checkoutRoute = require("./routes/checkout");
+const cartRoute = require("./routes/cart");
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/checkout", checkoutRoute);
+app.use("/cart", cartRoute);
 
 app.use("/payment", paymentRoutes);
 app.use("/payment", notifyWebhook);
