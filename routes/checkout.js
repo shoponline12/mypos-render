@@ -4,7 +4,6 @@ const router = express.Router();
 
 let currentCart = null;
 
-// Η Shopify στέλνει το καλάθι
 router.post("/", (req, res) => {
 
     currentCart = JSON.parse(req.body.cart);
@@ -15,7 +14,6 @@ router.post("/", (req, res) => {
 
 });
 
-// Εμφάνιση checkout
 router.get("/", (req, res) => {
 
     res.render("checkout", {
