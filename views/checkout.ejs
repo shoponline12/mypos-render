@@ -6,7 +6,6 @@
 <title>Summer Shop Checkout</title>
 
 <style>
-
 body{
 margin:0;
 padding:40px;
@@ -29,10 +28,6 @@ border-radius:12px;
 box-shadow:0 0 20px rgba(0,0,0,.08);
 }
 
-h2{
-margin-top:0;
-}
-
 input{
 width:100%;
 padding:14px;
@@ -53,10 +48,6 @@ font-size:18px;
 cursor:pointer;
 }
 
-button:hover{
-opacity:.9;
-}
-
 .cart-item{
 display:flex;
 gap:15px;
@@ -69,7 +60,6 @@ border-bottom:1px solid #eee;
 width:80px;
 border-radius:8px;
 }
-
 </style>
 
 </head>
@@ -82,9 +72,7 @@ border-radius:8px;
 
 <h2>Η παραγγελία σας</h2>
 
-<div id="cart-items">
-Φόρτωση...
-</div>
+<div id="cart-items"></div>
 
 </div>
 
@@ -95,17 +83,11 @@ border-radius:8px;
 <form action="/payment/create-payment" method="POST">
 
 <input name="firstName" placeholder="Όνομα">
-
 <input name="lastName" placeholder="Επώνυμο">
-
 <input name="email" placeholder="Email">
-
 <input name="phone" placeholder="Τηλέφωνο">
-
 <input name="address" placeholder="Διεύθυνση">
-
 <input name="city" placeholder="Πόλη">
-
 <input name="zip" placeholder="Τ.Κ.">
 
 <button type="submit">
@@ -120,15 +102,13 @@ border-radius:8px;
 
 <script>
 
-fetch("/cart")
-.then(r=>r.json())
-.then(cart=>{
+const cart = <%- JSON.stringify(cart || { items: [], total_price: 0 }) %>;
 
-let html="";
+let html = "";
 
 cart.items.forEach(item=>{
 
-html+=`
+html += `
 <div class="cart-item">
 
 <img src="${item.image}">
@@ -148,18 +128,9 @@ ${(item.final_price/100).toFixed(2)} €
 
 });
 
-html+=`<h3>Σύνολο ${(cart.total_price/100).toFixed(2)} €</h3>`;
+html += `<h3>Σύνολο ${(cart.total_price/100).toFixed(2)} €</h3>`;
 
-document.getElementById("cart-items").innerHTML=html;
-
-})
-.catch(err=>{
-
-document.getElementById("cart-items").innerHTML="Σφάλμα φόρτωσης καλαθιού";
-
-console.log(err);
-
-});
+document.getElementById("cart-items").innerHTML = html;
 
 </script>
 
