@@ -1,9 +1,30 @@
+const express = require("express");
+
+const router = express.Router();
+
+let currentCart = null;
+
+// Η Shopify στέλνει το καλάθι
 router.post("/", (req, res) => {
 
-    const cart = JSON.parse(req.body.cart);
+    currentCart = JSON.parse(req.body.cart);
 
-    res.render("checkout", {
-        cart
+    res.json({
+        success: true
     });
 
 });
+
+// Εμφάνιση checkout
+router.get("/", (req, res) => {
+
+    res.render("checkout", {
+        cart: currentCart || {
+            items: [],
+            total_price: 0
+        }
+    });
+
+});
+
+module.exports = router;
