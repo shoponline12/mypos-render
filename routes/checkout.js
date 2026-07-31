@@ -1,13 +1,9 @@
-const express = require("express");
-
-const router = express.Router();
-
 router.post("/", (req, res) => {
 
+    const cart = JSON.parse(req.body.cart);
+
     res.render("checkout", {
-        cart: req.body
+        cart
     });
 
 });
-
-module.exports = router;
